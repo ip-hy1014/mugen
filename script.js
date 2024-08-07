@@ -15,8 +15,12 @@ document.getElementById('startButton').addEventListener('click', () => {
     worker.postMessage(targetString);
 
     worker.onmessage = function(e) {
-        const { attempts, timeTaken, randomString } = e.data;
-        statusElement.textContent = `目標の文字列を見つけました！ 試行回数: ${attempts}, 時間: ${timeTaken}ms`;
-        outputElement.textContent = `見つけた文字列: ${randomString}`;
+        const { attempts, timeTaken, randomString, currentString } = e.data;
+        if (randomString) {
+            statusElement.textContent = `目標の文字列を見つけました！ 試行回数: ${attempts}, 時間: ${timeTaken}ms`;
+            outputElement.textContent = `見つけた文字列: ${randomString}`;
+        } else {
+            outputElement.textContent = `現在の文字列: ${currentString}\n試行回数: ${attempts}`;
+        }
     }
 });
